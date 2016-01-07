@@ -38,12 +38,15 @@ if (isset($_POST['login'])=='LOGIN') {
 	$username=$_POST['username'];
 	$pass=md5($_POST['pass']);
 
-	$cari = $conn->query("SELECT * FROM user WHERE username='$username' AND password='$pass'");
+	$cari = $conn->query("SELECT * FROM login WHERE username='$username' AND pass='$pass'");
+	$array = $cari->fetch_array();
 	if ($cari->num_rows > 0) {
 
-		$_SESSION['nama']=$username;
-
-		header('location:user/index.php');
+		$_SESSION['id']=$array['id'];
+		$_SESSION['nama']=$array['nama'];
+		$_SESSION['username']=$array['username'];
+		$_SESSION['role']=$array['role'];
+		header('location:cek.php');
 	}else{
 		echo "<center>Maap User<br/>".$username."<br/>Tidak Dikenali";
 	}
